@@ -16,10 +16,27 @@ class AggregateThemeFactory implements ThemeFactoryInterface
     /**
      * @param ThemeFactoryInterface[] $themeFactories
      */
-    public function __construct(array $themeFactories)
+    public function __construct(array $themeFactories = [])
     {
         $this->themeFactories = $themeFactories;
     }
+
+    /**
+     * @param array|ThemeFactoryInterface[] $themeFactories
+     */
+    public function setThemeFactories($themeFactories)
+    {
+        $this->themeFactories = $themeFactories;
+    }
+
+    /**
+     * @param ThemeFactoryInterface $themeFactory
+     */
+    public function addThemeFactory(ThemeFactoryInterface $themeFactory)
+    {
+        $this->themeFactories[] = $themeFactory;
+    }
+
 
     /**
      * Creates a theme object based on the descriptor object passed in parameter.

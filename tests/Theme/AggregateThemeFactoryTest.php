@@ -18,7 +18,8 @@ class AggregateThemeFactoryTest extends AbstractThemeTestCase
 
     public function testAggregateThemeFactory()
     {
-        $aggregateThemeFactory = new AggregateThemeFactory([ new TwigThemeFactory($this->createTwigEnvironment()) ]);
+        $aggregateThemeFactory = new AggregateThemeFactory([]);
+        $aggregateThemeFactory->addThemeFactory(new TwigThemeFactory($this->createTwigEnvironment()));
 
         $themeDescriptor = new TwigThemeDescriptor('index.html');
 
