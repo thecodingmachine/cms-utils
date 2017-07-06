@@ -1,19 +1,19 @@
 <?php
 
-namespace TheCodingMachine\CMS\Page;
+namespace TheCodingMachine\CMS\Block;
 
 
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\CMS\Theme\ThemeDescriptorInterface;
 
-class PageTest extends TestCase
+class BlockTest extends TestCase
 {
-    public function testPage()
+    public function testBlock()
     {
         $themeDescriptor = $this->createMock(ThemeDescriptorInterface::class);
         $context = ['foo'=>'bar'];
 
-        $page = new Page(
+        $page = new Block(
             $themeDescriptor,
             $context
         );

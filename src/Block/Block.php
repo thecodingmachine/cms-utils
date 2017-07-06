@@ -1,9 +1,9 @@
 <?php
-namespace TheCodingMachine\CMS\Page;
+namespace TheCodingMachine\CMS\Block;
 
 use TheCodingMachine\CMS\Theme\ThemeDescriptorInterface;
 
-class Page implements PageInterface
+class Block implements BlockInterface
 {
     /**
      * @var ThemeDescriptorInterface

@@ -4,13 +4,14 @@ namespace TheCodingMachine\CMS\Page;
 
 
 use PHPUnit\Framework\TestCase;
+use TheCodingMachine\CMS\Block\BlockInterface;
 use Zend\Diactoros\Uri;
 
 class StaticPageRegistryTest extends TestCase
 {
     public function testStaticPageRegistry()
     {
-        $page = $this->createMock(PageInterface::class);
+        $page = $this->createMock(BlockInterface::class);
         $registry = new StaticPageRegistry([
             '/test' => $page
         ]);
