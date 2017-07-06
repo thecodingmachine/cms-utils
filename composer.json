@@ -1,0 +1,41 @@
+{
+    "name": "thecodingmachine/cms-utils",
+    "description": "Utility classes for thecodingmachine/cms-interfaces.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Négrier",
+            "email": "d.negrier@thecodingmachine.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "thecodingmachine/cms-interfaces": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2",
+        "thecodingmachine/phpstan-strict-rules": "^0.7",
+        "satooshi/php-coveralls": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheCodingMachine\\CMS\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TheCodingMachine\\CMS\\": "tests/"
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse src -c phpstan.neon --level=4 --no-progress -vvv"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
