@@ -7,7 +7,7 @@ class TwigThemeFactoryTest extends AbstractThemeTestCase
 {
     public function testException()
     {
-        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment());
+        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
         $mock = $this->createMock(ThemeDescriptorInterface::class);
 
         $this->expectException(CannotHandleThemeDescriptorExceptionInterface::class);

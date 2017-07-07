@@ -20,7 +20,6 @@ class Block implements BlockInterface
      */
     public function __construct(ThemeDescriptorInterface $themeDescriptor, array $context)
     {
-
         $this->themeDescriptor = $themeDescriptor;
         $this->context = $context;
     }

@@ -7,7 +7,7 @@ class SubThemeTest extends AbstractThemeTestCase
 {
     public function testSubTheme()
     {
-        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html');
+        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
 
         $subTheme = new SubTheme($twigTheme, ['name' => 'Foo']);
 

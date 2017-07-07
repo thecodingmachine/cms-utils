@@ -4,6 +4,8 @@
 namespace TheCodingMachine\CMS\Theme;
 
 use Psr\Http\Message\StreamInterface;
+use TheCodingMachine\CMS\Block\BlockInterface;
+use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\RenderableInterface;
 use Zend\Diactoros\Stream;
 
@@ -18,11 +20,16 @@ class TwigTheme implements RenderableInterface
      * @var string
      */
     private $template;
+    /**
+     * @var BlockRendererInterface
+     */
+    private $blockRenderer;
 
-    public function __construct(\Twig_Environment $twig, string $template)
+    public function __construct(\Twig_Environment $twig, string $template, BlockRendererInterface $blockRenderer)
     {
         $this->twig = $twig;
         $this->template = $template;
+        $this->blockRenderer = $blockRenderer;
     }
 
 
@@ -34,6 +41,17 @@ class TwigTheme implements RenderableInterface
      */
     public function render(array $context): StreamInterface
     {
+        foreach ($context as $key => &$value) {
+            if ($value instanceof BlockInterface) {
+                $additionalContext = [
+                    'parent' => $context,
+                    'page' => $context['page'] ?? $context
+                ];
+
+                $value = $this->blockRenderer->renderBlock($value, $additionalContext);
+            }
+        }
+
         $text = $this->twig->render($this->template, $context);
 
         $stream = new Stream('php://temp', 'wb+');

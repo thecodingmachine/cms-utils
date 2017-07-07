@@ -7,7 +7,7 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
 {
     public function testSubThemeFactoryException()
     {
-        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment());
+        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
 
         $subThemeFactory = new SubThemeFactory($twigThemeFactory);
         $mock = $this->createMock(ThemeDescriptorInterface::class);
@@ -18,7 +18,7 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
 
     public function testSubThemeFactory()
     {
-        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment());
+        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
 
         $subThemeFactory = new SubThemeFactory($twigThemeFactory);
 

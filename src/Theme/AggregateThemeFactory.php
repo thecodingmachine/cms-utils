@@ -4,6 +4,9 @@
 namespace TheCodingMachine\CMS\Theme;
 
 
+use Psr\Http\Message\StreamInterface;
+use TheCodingMachine\CMS\Block\BlockInterface;
+use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\RenderableInterface;
 
 class AggregateThemeFactory implements ThemeFactoryInterface

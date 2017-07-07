@@ -4,6 +4,7 @@
 namespace TheCodingMachine\CMS\Theme;
 
 
+use TheCodingMachine\CMS\Block\BlockRenderer;
 use TheCodingMachine\CMS\RenderableInterface;
 
 class TwigThemeFactory implements ThemeFactoryInterface
@@ -12,11 +13,15 @@ class TwigThemeFactory implements ThemeFactoryInterface
      * @var \Twig_Environment
      */
     private $twig;
+    /**
+     * @var BlockRenderer
+     */
+    private $blockRenderer;
 
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twig, BlockRenderer $blockRenderer)
     {
-
         $this->twig = $twig;
+        $this->blockRenderer = $blockRenderer;
     }
 
     /**
@@ -29,7 +34,7 @@ class TwigThemeFactory implements ThemeFactoryInterface
         if (!$descriptor instanceof TwigThemeDescriptor) {
             throw CannotHandleThemeDescriptorException::cannotHandleDescriptorClass(get_class($descriptor));
         }
-        return new TwigTheme($this->twig, $descriptor->getTemplate());
+        return new TwigTheme($this->twig, $descriptor->getTemplate(), $this->blockRenderer);
     }
 
     /**
