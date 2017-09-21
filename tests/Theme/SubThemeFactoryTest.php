@@ -12,6 +12,8 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
         $subThemeFactory = new SubThemeFactory($twigThemeFactory);
         $mock = $this->createMock(ThemeDescriptorInterface::class);
 
+        $this->assertFalse($subThemeFactory->canCreateTheme($mock));
+
         $this->expectException(CannotHandleThemeDescriptorExceptionInterface::class);
         $subThemeFactory->createTheme($mock);
     }
@@ -26,6 +28,8 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
             new TwigThemeDescriptor('index.html'),
             ['name' => 'Foo']
         );
+
+        $this->assertTrue($subThemeFactory->canCreateTheme($subThemeDescriptor));
 
         $theme = $subThemeFactory->createTheme($subThemeDescriptor);
         $this->assertInstanceOf(SubTheme::class, $theme);
