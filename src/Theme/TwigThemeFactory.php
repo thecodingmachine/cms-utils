@@ -4,7 +4,7 @@
 namespace TheCodingMachine\CMS\Theme;
 
 
-use TheCodingMachine\CMS\Block\BlockRenderer;
+use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\RenderableInterface;
 
 class TwigThemeFactory implements ThemeFactoryInterface
@@ -18,7 +18,7 @@ class TwigThemeFactory implements ThemeFactoryInterface
      */
     private $blockRenderer;
 
-    public function __construct(\Twig_Environment $twig, BlockRenderer $blockRenderer)
+    public function __construct(\Twig_Environment $twig, BlockRendererInterface $blockRenderer)
     {
         $this->twig = $twig;
         $this->blockRenderer = $blockRenderer;
