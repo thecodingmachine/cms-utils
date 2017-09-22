@@ -20,8 +20,6 @@ class CMSUtilsServiceProvider implements ServiceProviderInterface
     public function getFactories()
     {
         return [
-            TwigThemeFactory::class => [self::class, 'createTwigThemeFactory'],
-            SubThemeFactory::class => [self::class, 'createSubThemeFactory'],
             AggregateThemeFactory::class => [self::class, 'createAggregateThemeFactory'],
             ThemeFactoryInterface::class => new Alias(AggregateThemeFactory::class),
             BlockRendererInterface::class => new Alias(BlockRenderer::class),
@@ -30,36 +28,42 @@ class CMSUtilsServiceProvider implements ServiceProviderInterface
         ];
     }
 
-    public static function createTwigThemeFactory(ContainerInterface $container): TwigThemeFactory
-    {
-        return new TwigThemeFactory($container->get(\Twig_Environment::class), $container->get(BlockRendererInterface::class));
-    }
-
-    public static function createSubThemeFactory(ContainerInterface $container): SubThemeFactory
-    {
-        return new SubThemeFactory($container->get(ThemeFactoryInterface::class));
-    }
-
     public static function createAggregateThemeFactory(ContainerInterface $container): AggregateThemeFactory
     {
-        return new AggregateThemeFactory();
+        if (self::$themeFactory === null) {
+            self::$themeFactory = new AggregateThemeFactory([]);
+        }
+        self::$aggregateThemeFactory = new AggregateThemeFactory();
+
+        $subThemeFactory = new SubThemeFactory(self::$aggregateThemeFactory);
+        $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $blockRenderer);
+
+        self::$aggregateThemeFactory->addThemeFactory($container->get(TwigThemeFactory::class));
+        self::$aggregateThemeFactory->addThemeFactory($container->get(SubThemeFactory::class));
+        return self::$aggregateThemeFactory;
     }
+
+    private static $themeFactory = null;
 
     public static function createBlockRenderer(ContainerInterface $container): BlockRenderer
     {
-        return new BlockRenderer($container->get(ThemeFactoryInterface::class));
+        if (self::$themeFactory === null) {
+            self::$themeFactory = new AggregateThemeFactory([]);
+        }
+
+        $blockRenderer = new BlockRenderer(self::$themeFactory);
+
+        $subThemeFactory = new SubThemeFactory(self::$themeFactory);
+        $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $blockRenderer);
+
+        self::$themeFactory->addThemeFactory($subThemeFactory);
+        self::$themeFactory->addThemeFactory($twigThemeFactory);
+
+        return $blockRenderer;
     }
 
     public function getExtensions()
     {
-        return [
-            AggregateThemeFactory::class => [self::class, 'extendAggregateThemeFactory'],
-        ];
-    }
-
-    public static function extendAggregateThemeFactory(ContainerInterface $container, AggregateThemeFactory $aggregateThemeFactory): AggregateThemeFactory
-    {
-        $aggregateThemeFactory->addThemeFactory($container->get(TwigThemeFactory::class));
-        $aggregateThemeFactory->addThemeFactory($container->get(SubThemeFactory::class));
+        return [];
     }
 }
