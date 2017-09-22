@@ -33,7 +33,7 @@ class Block implements BlockInterface
     }
 
     /**
-     * @return \mixed[]
+     * @return mixed[]
      */
     public function getContext(): array
     {

@@ -17,7 +17,7 @@ class SubTheme implements RenderableInterface
      */
     private $theme;
     /**
-     * @var \mixed[]
+     * @var mixed[]
      */
     private $additionalContext;
 
