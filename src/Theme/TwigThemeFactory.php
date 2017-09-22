@@ -14,7 +14,7 @@ class TwigThemeFactory implements ThemeFactoryInterface
      */
     private $twig;
     /**
-     * @var BlockRenderer
+     * @var BlockRendererInterface
      */
     private $blockRenderer;
 

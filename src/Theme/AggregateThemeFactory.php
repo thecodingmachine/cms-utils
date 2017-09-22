@@ -12,7 +12,7 @@ use TheCodingMachine\CMS\RenderableInterface;
 class AggregateThemeFactory implements ThemeFactoryInterface
 {
     /**
-     * @var array|ThemeFactoryInterface[]
+     * @var ThemeFactoryInterface[]
      */
     private $themeFactories;
 
@@ -25,9 +25,9 @@ class AggregateThemeFactory implements ThemeFactoryInterface
     }
 
     /**
-     * @param array|ThemeFactoryInterface[] $themeFactories
+     * @param ThemeFactoryInterface[] $themeFactories
      */
-    public function setThemeFactories($themeFactories)
+    public function setThemeFactories(array $themeFactories): void
     {
         $this->themeFactories = $themeFactories;
     }
@@ -35,7 +35,7 @@ class AggregateThemeFactory implements ThemeFactoryInterface
     /**
      * @param ThemeFactoryInterface $themeFactory
      */
-    public function addThemeFactory(ThemeFactoryInterface $themeFactory)
+    public function addThemeFactory(ThemeFactoryInterface $themeFactory): void
     {
         $this->themeFactories[] = $themeFactory;
     }

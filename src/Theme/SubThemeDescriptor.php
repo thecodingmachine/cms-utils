@@ -7,7 +7,7 @@ namespace TheCodingMachine\CMS\Theme;
 class SubThemeDescriptor implements ThemeDescriptorInterface
 {
     /**
-     * @var \mixed[]
+     * @var mixed[]
      */
     private $additionalContext;
     /**
@@ -33,7 +33,7 @@ class SubThemeDescriptor implements ThemeDescriptorInterface
     }
 
     /**
-     * @return \mixed[]
+     * @return mixed[]
      */
     public function getAdditionalContext(): array
     {
