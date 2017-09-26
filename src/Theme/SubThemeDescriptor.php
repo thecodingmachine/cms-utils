@@ -4,7 +4,7 @@
 namespace TheCodingMachine\CMS\Theme;
 
 
-class SubThemeDescriptor implements ThemeDescriptorInterface
+class SubThemeDescriptor implements ThemeDescriptorInterface, \JsonSerializable
 {
     /**
      * @var mixed[]
@@ -38,5 +38,14 @@ class SubThemeDescriptor implements ThemeDescriptorInterface
     public function getAdditionalContext(): array
     {
         return $this->additionalContext;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'type' => 'subTheme',
+            'additionalContext' => $this->additionalContext,
+            'theme' => $this->themeDescriptor
+        ];
     }
 }

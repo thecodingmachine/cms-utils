@@ -3,7 +3,7 @@ namespace TheCodingMachine\CMS\Block;
 
 use TheCodingMachine\CMS\Theme\ThemeDescriptorInterface;
 
-class Block implements BlockInterface
+class Block implements BlockInterface, \JsonSerializable
 {
     /**
      * @var ThemeDescriptorInterface
@@ -38,5 +38,13 @@ class Block implements BlockInterface
     public function getContext(): array
     {
         return $this->context;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'context' => $this->context,
+            'theme' => $this->themeDescriptor
+        ];
     }
 }

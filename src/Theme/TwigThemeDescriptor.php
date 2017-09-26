@@ -4,7 +4,7 @@
 namespace TheCodingMachine\CMS\Theme;
 
 
-class TwigThemeDescriptor implements ThemeDescriptorInterface
+class TwigThemeDescriptor implements ThemeDescriptorInterface, \JsonSerializable
 {
     /**
      * @var string
@@ -22,5 +22,13 @@ class TwigThemeDescriptor implements ThemeDescriptorInterface
     public function getTemplate(): string
     {
         return $this->template;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'type' => 'twigTheme',
+            'template' => $this->template,
+        ];
     }
 }
