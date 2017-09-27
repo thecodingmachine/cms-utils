@@ -29,7 +29,17 @@ class BlockUnserializerTest extends TestCase
                 'type' => 'subTheme',
                 'additionalContext' => [
                     'sidebar' => [
-                        'bar'
+                        'bar',
+                        [
+                            'context' => [
+                                'content' => 'inner_block'
+                            ],
+                            'theme' => [
+                                'type' => 'twig',
+                                'template' => 'menu.twig',
+                                'config' => [],
+                            ]
+                        ]
                     ]
                 ],
                 'theme' => [
@@ -47,6 +57,8 @@ class BlockUnserializerTest extends TestCase
         $this->assertInstanceOf(SubThemeDescriptor::class, $subTheme);
         $twigTheme = $subTheme->getThemeDescriptor();
         $this->assertInstanceOf(TwigThemeDescriptor::class, $twigTheme);
+
+        $this->assertInstanceOf(Block::class, $subTheme->getAdditionalContext()['sidebar'][1]);
 
         $array = json_decode(json_encode($block), true);
 

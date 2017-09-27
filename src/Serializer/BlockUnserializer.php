@@ -28,7 +28,6 @@ class BlockUnserializer
     {
         $context = $arr['context'];
         $themeDescriptor = $this->themeUnserializer->createFromArray($arr['theme']);
-
         return new Block($themeDescriptor, $context);
     }
 
