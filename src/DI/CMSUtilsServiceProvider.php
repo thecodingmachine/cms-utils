@@ -60,7 +60,7 @@ class CMSUtilsServiceProvider implements ServiceProviderInterface
                 return $blockRenderer;
             },
 
-            AggregateThemeUnserializer::class => function(ContainerInterface $container) use (&$aggregateThemeUnserializer): AggregateThemeUnserializer
+            AggregateThemeUnserializer::class => function() use (&$aggregateThemeUnserializer): AggregateThemeUnserializer
             {
                 list($aggregateThemeUnserializer, $blockUnserializer) = $this->getBlockAndAggregateUnserializer();
 
