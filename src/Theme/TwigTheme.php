@@ -6,6 +6,7 @@ namespace TheCodingMachine\CMS\Theme;
 use Psr\Http\Message\StreamInterface;
 use TheCodingMachine\CMS\Block\BlockInterface;
 use TheCodingMachine\CMS\Block\BlockRendererInterface;
+use TheCodingMachine\CMS\CMSException;
 use TheCodingMachine\CMS\RenderableInterface;
 use Zend\Diactoros\Stream;
 
@@ -41,15 +42,20 @@ class TwigTheme implements RenderableInterface
      */
     public function render(array $context): StreamInterface
     {
-        foreach ($context as $key => &$value) {
-            if ($value instanceof BlockInterface) {
-                $additionalContext = [
-                    'parent' => $context,
-                    'page' => $context['page'] ?? $context
-                ];
+        $parent = $context['parent'] ?? null;
+        unset($context['parent']);
+        $page = $context['page'] ?? null;
+        unset($context['page']);
 
-                $value = $this->blockRenderer->renderBlock($value, $additionalContext);
-            }
+        foreach ($context as $key => &$value) {
+            $value = $this->contextValueToString($value, $context);
+        }
+
+        if ($parent !== null) {
+            $context['parent'] = $parent;
+        }
+        if ($page !== null) {
+            $context['page'] = $page;
         }
 
         $text = $this->twig->render($this->template, $context);
@@ -59,5 +65,34 @@ class TwigTheme implements RenderableInterface
         $stream->rewind();
 
         return $stream;
+    }
+
+    /**
+     * @param mixed $value
+     * @param mixed[] $context
+     * @return string
+     * @throws CMSException
+     */
+    private function contextValueToString($value, array $context) : string
+    {
+        if ($value instanceof BlockInterface) {
+            $additionalContext = [
+                'parent' => $context,
+                'page' => $context['page'] ?? $context
+            ];
+
+            return (string) $this->blockRenderer->renderBlock($value, $additionalContext);
+        }
+        if (is_array($value)) {
+            $str = '';
+            foreach ($value as $item) {
+                $str .= $this->contextValueToString($item, $context);
+            }
+            return $str;
+        }
+        if (is_string($value)) {
+            return $value;
+        }
+        throw new CMSException('Unable to handle a context value. It must be a string or an array or a BlockInterface');
     }
 }
