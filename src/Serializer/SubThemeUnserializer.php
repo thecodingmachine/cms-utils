@@ -30,11 +30,27 @@ class SubThemeUnserializer implements ThemeUnserializerInterface
     {
         $additionalContext = $arr['additionalContext'];
         foreach ($additionalContext as $key => &$value) {
-            if (!is_array($value)) {
-                $value = $this->blockUnserializer->createFromArray($value);
-            }
+            $value = $this->unserializeContextArray($value);
         }
 
         return new SubThemeDescriptor($this->aggregateThemeUnserializer->createFromArray($arr['theme']), $additionalContext);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function unserializeContextArray($value)
+    {
+        if (is_array($value)) {
+            if (isset($value['context'])) {
+                $value = $this->blockUnserializer->createFromArray($value);
+            } else {
+                foreach ($value as &$item) {
+                    $item = $this->unserializeContextArray($item);
+                }
+            }
+        }
+        return $value;
     }
 }
