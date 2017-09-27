@@ -4,6 +4,7 @@ namespace TheCodingMachine\CMS\Theme;
 
 
 use TheCodingMachine\CMS\Block\Block;
+use TheCodingMachine\CMS\CMSException;
 
 class TwigThemeTest extends AbstractThemeTestCase
 {
@@ -23,7 +24,10 @@ class TwigThemeTest extends AbstractThemeTestCase
         $header = new Block(
             new TwigThemeDescriptor('header.html', []),
             [
-                'menu' => 'menu'
+                'menu' => [
+                    'menu',
+                    'menu2'
+                ]
             ]
         );
 
@@ -32,7 +36,25 @@ class TwigThemeTest extends AbstractThemeTestCase
             'header' => $header
         ]);
 
-        $this->assertSame('menuFooFooHello Foo!', $stream->getContents());
+        $this->assertSame('menumenu2FooFooHello Foo!', $stream->getContents());
+    }
+
+    public function testException()
+    {
+        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
+
+        $header = new Block(
+            new TwigThemeDescriptor('header.html', []),
+            [
+                'menu' => new \stdClass()
+            ]
+        );
+
+        $this->expectException(CMSException::class);
+        $twigTheme->render([
+            'name' => 'Foo',
+            'header' => $header
+        ]);
     }
 
 }
