@@ -12,11 +12,20 @@ use TheCodingMachine\CMS\Theme\AggregateThemeFactory;
 
 class CMSUtilsServiceProviderTest extends TestCase
 {
-    public function testServiceProvider()
+    private function getContainer(): Container
     {
         $container = new Container();
         $container->register(new TwigServiceProvider());
         $container->register(new CMSUtilsServiceProvider());
+
+        $container->set('THEMES_PATH', __DIR__.'/../Fixtures/');
+        $container->set('THEMES_URL', '/root_url');
+        return $container;
+    }
+
+    public function testServiceProvider()
+    {
+        $container = $this->getContainer();
 
         $blockRenderer = $container->get(BlockRendererInterface::class);
 
@@ -26,9 +35,7 @@ class CMSUtilsServiceProviderTest extends TestCase
 
     public function testServiceProvider2()
     {
-        $container = new Container();
-        $container->register(new TwigServiceProvider());
-        $container->register(new CMSUtilsServiceProvider());
+        $container = $this->getContainer();
 
         $this->assertInstanceOf(AggregateThemeFactory::class, $container->get(AggregateThemeFactory::class));
         $this->assertInstanceOf(BlockRendererInterface::class, $container->get(BlockRendererInterface::class));
@@ -36,9 +43,7 @@ class CMSUtilsServiceProviderTest extends TestCase
 
     public function testServiceProvider3()
     {
-        $container = new Container();
-        $container->register(new TwigServiceProvider());
-        $container->register(new CMSUtilsServiceProvider());
+        $container = $this->getContainer();
 
         $this->assertInstanceOf(AggregateThemeUnserializer::class, $container->get(AggregateThemeUnserializer::class));
         $this->assertInstanceOf(BlockUnserializer::class, $container->get(BlockUnserializer::class));
