@@ -35,7 +35,7 @@ class CMSUtilsServiceProvider implements ServiceProviderInterface
                 $aggregateThemeFactory = new AggregateThemeFactory([]);
 
                 $subThemeFactory = new SubThemeFactory($aggregateThemeFactory);
-                $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $container->get(BlockRendererInterface::class));
+                $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $container->get(BlockRendererInterface::class), $container->get('THEMES_PATH'), $container->get('THEMES_URL'));
 
                 $aggregateThemeFactory->addThemeFactory($twigThemeFactory);
                 $aggregateThemeFactory->addThemeFactory($subThemeFactory);
@@ -52,7 +52,7 @@ class CMSUtilsServiceProvider implements ServiceProviderInterface
                 $blockRenderer = new BlockRenderer($aggregateThemeFactory);
 
                 $subThemeFactory = new SubThemeFactory($aggregateThemeFactory);
-                $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $blockRenderer);
+                $twigThemeFactory = new TwigThemeFactory($container->get(\Twig_Environment::class), $blockRenderer, $container->get('THEMES_PATH'), $container->get('THEMES_URL'));
 
                 $aggregateThemeFactory->addThemeFactory($subThemeFactory);
                 $aggregateThemeFactory->addThemeFactory($twigThemeFactory);

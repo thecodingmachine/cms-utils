@@ -21,7 +21,7 @@ class TwigThemeTest extends AbstractThemeTestCase
         $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
 
         $header = new Block(
-            new TwigThemeDescriptor('header.html'),
+            new TwigThemeDescriptor('header.html', []),
             [
                 'menu' => 'menu'
             ]

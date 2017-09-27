@@ -28,7 +28,7 @@ abstract class AbstractThemeTestCase extends TestCase
         if ($this->twigThemeFactory !== null) {
             return $this->twigThemeFactory;
         }
-        return $this->twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
+        return $this->twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer(), __DIR__.'/../Fixtures/', '/root_url');
     }
 
     protected function createAggregateThemeFactory(): AggregateThemeFactory

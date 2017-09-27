@@ -7,7 +7,7 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
 {
     public function testSubThemeFactoryException()
     {
-        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
+        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer(), __DIR__.'/../Fixtures/', '/root_url');
 
         $subThemeFactory = new SubThemeFactory($twigThemeFactory);
         $mock = $this->createMock(ThemeDescriptorInterface::class);
@@ -20,12 +20,12 @@ class SubThemeFactoryTest extends AbstractThemeTestCase
 
     public function testSubThemeFactory()
     {
-        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer());
+        $twigThemeFactory = new TwigThemeFactory($this->createTwigEnvironment(), $this->createBlockRenderer(), __DIR__.'/../Fixtures/', '/root_url');
 
         $subThemeFactory = new SubThemeFactory($twigThemeFactory);
 
         $subThemeDescriptor = new SubThemeDescriptor(
-            new TwigThemeDescriptor('index.html'),
+            new TwigThemeDescriptor('index.html', []),
             ['name' => 'Foo']
         );
 

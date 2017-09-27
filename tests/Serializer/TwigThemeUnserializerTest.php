@@ -12,9 +12,11 @@ class TwigThemeUnserializerTest extends TestCase
     {
         $unserializer = new TwigThemeUnserializer();
         $template = $unserializer->createFromArray([
-            'template' => 'foo'
+            'template' => 'foo',
+            'config' => ['foo'=>'bar']
         ]);
         $this->assertInstanceOf(TwigThemeDescriptor::class, $template);
         $this->assertSame('foo', $template->getTemplate());
+        $this->assertSame(['foo'=>'bar'], $template->getConfig());
     }
 }

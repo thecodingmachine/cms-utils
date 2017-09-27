@@ -9,7 +9,7 @@ class AggregateThemeFactoryTest extends AbstractThemeTestCase
     {
         $aggregateThemeFactory = new AggregateThemeFactory([]);
 
-        $themeDescriptor = new TwigThemeDescriptor('index.html');
+        $themeDescriptor = new TwigThemeDescriptor('index.html', []);
 
         $this->assertFalse($aggregateThemeFactory->canCreateTheme($themeDescriptor));
         $this->expectException(CannotHandleThemeDescriptorExceptionInterface::class);
@@ -21,7 +21,7 @@ class AggregateThemeFactoryTest extends AbstractThemeTestCase
         $aggregateThemeFactory = new AggregateThemeFactory([]);
         $aggregateThemeFactory->addThemeFactory($this->getTwigThemeFactory());
 
-        $themeDescriptor = new TwigThemeDescriptor('index.html');
+        $themeDescriptor = new TwigThemeDescriptor('index.html', []);
 
         $this->assertTrue($aggregateThemeFactory->canCreateTheme($themeDescriptor));
         $this->assertInstanceOf(TwigTheme::class, $aggregateThemeFactory->createTheme($themeDescriptor));
@@ -32,7 +32,7 @@ class AggregateThemeFactoryTest extends AbstractThemeTestCase
         $aggregateThemeFactory = new AggregateThemeFactory([]);
         $aggregateThemeFactory->setThemeFactories([$this->getTwigThemeFactory()]);
 
-        $themeDescriptor = new TwigThemeDescriptor('index.html');
+        $themeDescriptor = new TwigThemeDescriptor('index.html', []);
 
         $this->assertTrue($aggregateThemeFactory->canCreateTheme($themeDescriptor));
         $this->assertInstanceOf(TwigTheme::class, $aggregateThemeFactory->createTheme($themeDescriptor));

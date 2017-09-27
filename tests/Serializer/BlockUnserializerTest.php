@@ -34,7 +34,8 @@ class BlockUnserializerTest extends TestCase
                 ],
                 'theme' => [
                     'type' => 'twig',
-                    'template' => 'index.twig'
+                    'template' => 'index.twig',
+                    'config' => [],
                 ]
             ]
         ];

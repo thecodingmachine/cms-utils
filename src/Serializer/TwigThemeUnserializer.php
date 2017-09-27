@@ -11,6 +11,6 @@ class TwigThemeUnserializer implements ThemeUnserializerInterface
 {
     public function createFromArray(array $arr): ThemeDescriptorInterface
     {
-        return new TwigThemeDescriptor($arr['template']);
+        return new TwigThemeDescriptor($arr['template'], $arr['config']);
     }
 }

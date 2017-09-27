@@ -6,6 +6,7 @@ namespace TheCodingMachine\CMS\Theme;
 
 use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\RenderableInterface;
+use TheCodingMachine\CMS\Theme\Extensions\ThemeExtension;
 
 class TwigThemeFactory implements ThemeFactoryInterface
 {
@@ -17,11 +18,21 @@ class TwigThemeFactory implements ThemeFactoryInterface
      * @var BlockRendererInterface
      */
     private $blockRenderer;
+    /**
+     * @var string
+     */
+    private $themesPath;
+    /**
+     * @var string
+     */
+    private $themesUrl;
 
-    public function __construct(\Twig_Environment $twig, BlockRendererInterface $blockRenderer)
+    public function __construct(\Twig_Environment $twig, BlockRendererInterface $blockRenderer, string $themesPath, string $themesUrl)
     {
         $this->twig = $twig;
         $this->blockRenderer = $blockRenderer;
+        $this->themesPath = rtrim($themesPath, '/').'/';
+        $this->themesUrl = rtrim($themesUrl, '/').'/';
     }
 
     /**
@@ -34,7 +45,18 @@ class TwigThemeFactory implements ThemeFactoryInterface
         if (!$descriptor instanceof TwigThemeDescriptor) {
             throw CannotHandleThemeDescriptorException::cannotHandleDescriptorClass(get_class($descriptor));
         }
-        return new TwigTheme($this->twig, $descriptor->getTemplate(), $this->blockRenderer);
+
+        // Let's configure / customize the Twig environment!
+        $config = $descriptor->getConfig();
+        if (isset($config['theme'])) {
+            $twig = clone $this->twig;
+            $twig->addExtension(new ThemeExtension($this->themesUrl.ltrim($config['theme'], '/')));
+            $twig->setLoader(new \Twig_Loader_Filesystem($this->themesPath.ltrim($config['theme'], '/')));
+        } else {
+            $twig = $this->twig;
+        }
+
+        return new TwigTheme($twig, $descriptor->getTemplate(), $this->blockRenderer);
     }
 
     /**
