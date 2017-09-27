@@ -8,7 +8,7 @@ use Psr\Http\Message\StreamInterface;
 use TheCodingMachine\CMS\RenderableInterface;
 
 /**
- * This class is an adaptator around a theme that adds additional information in the context.
+ * This class is an adapter around a theme that adds additional information in the context.
  */
 class SubTheme implements RenderableInterface
 {

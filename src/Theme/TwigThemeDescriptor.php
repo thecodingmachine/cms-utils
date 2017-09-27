@@ -27,7 +27,7 @@ class TwigThemeDescriptor implements ThemeDescriptorInterface, \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'type' => 'twigTheme',
+            'type' => 'twig',
             'template' => $this->template,
         ];
     }

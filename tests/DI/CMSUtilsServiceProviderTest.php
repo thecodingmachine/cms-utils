@@ -5,6 +5,8 @@ namespace TheCodingMachine\CMS\DI;
 use PHPUnit\Framework\TestCase;
 use Simplex\Container;
 use TheCodingMachine\CMS\Block\BlockRendererInterface;
+use TheCodingMachine\CMS\Serializer\AggregateThemeUnserializer;
+use TheCodingMachine\CMS\Serializer\BlockUnserializer;
 use TheCodingMachine\TwigServiceProvider;
 use TheCodingMachine\CMS\Theme\AggregateThemeFactory;
 
@@ -30,5 +32,15 @@ class CMSUtilsServiceProviderTest extends TestCase
 
         $this->assertInstanceOf(AggregateThemeFactory::class, $container->get(AggregateThemeFactory::class));
         $this->assertInstanceOf(BlockRendererInterface::class, $container->get(BlockRendererInterface::class));
+    }
+
+    public function testServiceProvider3()
+    {
+        $container = new Container();
+        $container->register(new TwigServiceProvider());
+        $container->register(new CMSUtilsServiceProvider());
+
+        $this->assertInstanceOf(AggregateThemeUnserializer::class, $container->get(AggregateThemeUnserializer::class));
+        $this->assertInstanceOf(BlockUnserializer::class, $container->get(BlockUnserializer::class));
     }
 }
