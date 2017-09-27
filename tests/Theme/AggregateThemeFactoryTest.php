@@ -26,4 +26,15 @@ class AggregateThemeFactoryTest extends AbstractThemeTestCase
         $this->assertTrue($aggregateThemeFactory->canCreateTheme($themeDescriptor));
         $this->assertInstanceOf(TwigTheme::class, $aggregateThemeFactory->createTheme($themeDescriptor));
     }
+
+    public function testAggregateThemeFactorySetter()
+    {
+        $aggregateThemeFactory = new AggregateThemeFactory([]);
+        $aggregateThemeFactory->setThemeFactories([$this->getTwigThemeFactory()]);
+
+        $themeDescriptor = new TwigThemeDescriptor('index.html');
+
+        $this->assertTrue($aggregateThemeFactory->canCreateTheme($themeDescriptor));
+        $this->assertInstanceOf(TwigTheme::class, $aggregateThemeFactory->createTheme($themeDescriptor));
+    }
 }
