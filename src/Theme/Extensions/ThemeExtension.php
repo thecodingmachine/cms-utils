@@ -7,15 +7,27 @@ namespace TheCodingMachine\CMS\Theme\Extensions;
 class ThemeExtension extends \Twig_Extension
 {
     /**
-     * @var string
+     * A list of theme URLs (the active one is the last one)
+     *
+     * @var string[]
      */
-    private $themeUrl;
+    private $themeUrls = [];
 
-    public function __construct(string $themeUrl)
+    public function pushThemeUrl(?string $themeUrl): void
     {
-
-        $this->themeUrl = rtrim($themeUrl, '/').'/';
+        $this->themeUrls[] = rtrim($themeUrl, '/').'/';
     }
+
+    public function popThemeUrl(): ?string
+    {
+        return array_pop($this->themeUrls);
+    }
+
+    private function getThemeUrl(): ?string
+    {
+        return $this->themeUrls[count($this->themeUrls)-1];
+    }
+
 
     /**
      * Returns a list of functions to add to the existing list.
@@ -25,12 +37,12 @@ class ThemeExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('theme', [$this, 'getThemeUrl']),
+            new \Twig_Function('theme', [$this, 'getResourceUrl']),
         ];
     }
 
-    public function getThemeUrl(string $resource): string
+    public function getResourceUrl(string $resource): string
     {
-        return $this->themeUrl.$resource;
+        return $this->getThemeUrl().$resource;
     }
 }

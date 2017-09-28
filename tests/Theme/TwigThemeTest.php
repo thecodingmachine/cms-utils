@@ -10,7 +10,7 @@ class TwigThemeTest extends AbstractThemeTestCase
 {
     public function testTwigTheme()
     {
-        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
+        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer(), 'theme_path');
 
         $stream = $twigTheme->render(['name' => 'Foo']);
 
@@ -19,7 +19,7 @@ class TwigThemeTest extends AbstractThemeTestCase
 
     public function testSubBlocks()
     {
-        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
+        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer(), 'theme_path');
 
         $header = new Block(
             new TwigThemeDescriptor('header.html', []),
@@ -41,7 +41,7 @@ class TwigThemeTest extends AbstractThemeTestCase
 
     public function testException()
     {
-        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer());
+        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer(), 'theme_path');
 
         $header = new Block(
             new TwigThemeDescriptor('header.html', []),

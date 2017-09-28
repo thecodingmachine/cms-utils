@@ -50,13 +50,14 @@ class TwigThemeFactory implements ThemeFactoryInterface
         $config = $descriptor->getConfig();
         if (isset($config['theme'])) {
             $twig = clone $this->twig;
-            $twig->addExtension(new ThemeExtension($this->themesUrl.ltrim($config['theme'], '/')));
             $twig->setLoader(new \Twig_Loader_Filesystem($this->themesPath.ltrim($config['theme'], '/')));
+            $themeUrl = $this->themesUrl.ltrim($config['theme'], '/');
         } else {
             $twig = $this->twig;
+            $themeUrl = null;
         }
 
-        return new TwigTheme($twig, $descriptor->getTemplate(), $this->blockRenderer);
+        return new TwigTheme($twig, $descriptor->getTemplate(), $this->blockRenderer, $themeUrl);
     }
 
     /**
