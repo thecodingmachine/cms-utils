@@ -24,5 +24,12 @@ class TwigThemeFactoryTest extends AbstractThemeTestCase
         $result = (string) $twigTheme->render([]);
 
         $this->assertSame('/root_url/foo/bar.js', $result);
+
+        // Let's do it twice (to check if Twig clone works correctly)
+        $twigTheme = $twigThemeFactory->createTheme($descriptor);
+        $result = (string) $twigTheme->render([]);
+
+        $this->assertSame('/root_url/foo/bar.js', $result);
+
     }
 }

@@ -8,6 +8,7 @@ use TheCodingMachine\CMS\Block\BlockInterface;
 use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\CMSException;
 use TheCodingMachine\CMS\RenderableInterface;
+use TheCodingMachine\CMS\Theme\Extensions\ThemeExtension;
 use Zend\Diactoros\Stream;
 
 class TwigTheme implements RenderableInterface
@@ -25,12 +26,17 @@ class TwigTheme implements RenderableInterface
      * @var BlockRendererInterface
      */
     private $blockRenderer;
+    /**
+     * @var string
+     */
+    private $themeUrl;
 
-    public function __construct(\Twig_Environment $twig, string $template, BlockRendererInterface $blockRenderer)
+    public function __construct(\Twig_Environment $twig, string $template, BlockRendererInterface $blockRenderer, string $themeUrl = null)
     {
         $this->twig = $twig;
         $this->template = $template;
         $this->blockRenderer = $blockRenderer;
+        $this->themeUrl = $themeUrl;
     }
 
 
@@ -58,7 +64,18 @@ class TwigTheme implements RenderableInterface
             $context['page'] = $page;
         }
 
-        $text = $this->twig->render($this->template, $context);
+        if (!$this->twig->hasExtension(ThemeExtension::class)) {
+            $this->twig->addExtension(new ThemeExtension());
+        }
+        $themeExtension = $this->twig->getExtension(ThemeExtension::class);
+        /* @var $themeExtension ThemeExtension */
+
+        $themeExtension->pushThemeUrl($this->themeUrl);
+        try {
+            $text = $this->twig->render($this->template, $context);
+        } finally {
+            $themeExtension->popThemeUrl();
+        }
 
         $stream = new Stream('php://temp', 'wb+');
         $stream->write($text);
