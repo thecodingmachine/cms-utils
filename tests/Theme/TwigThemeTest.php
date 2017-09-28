@@ -39,22 +39,4 @@ class TwigThemeTest extends AbstractThemeTestCase
         $this->assertSame('menumenu2FooFooHello Foo!', $stream->getContents());
     }
 
-    public function testException()
-    {
-        $twigTheme = new TwigTheme($this->createTwigEnvironment(), 'index.html', $this->createBlockRenderer(), 'theme_path');
-
-        $header = new Block(
-            new TwigThemeDescriptor('header.html', []),
-            [
-                'menu' => new \stdClass()
-            ]
-        );
-
-        $this->expectException(CMSException::class);
-        $twigTheme->render([
-            'name' => 'Foo',
-            'header' => $header
-        ]);
-    }
-
 }

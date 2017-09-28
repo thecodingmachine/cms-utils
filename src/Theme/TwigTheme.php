@@ -107,9 +107,6 @@ class TwigTheme implements RenderableInterface
             }
             return $str;
         }
-        if (is_string($value)) {
-            return $value;
-        }
-        throw new CMSException('Unable to handle a context value. It must be a string or an array or a BlockInterface');
+        return $value;
     }
 }
