@@ -57,6 +57,7 @@ class TwigTheme implements RenderableInterface
             $value = $this->contextValueToString($value, $context);
         }
 
+
         if ($parent !== null) {
             $context['parent'] = $parent;
         }
@@ -87,10 +88,10 @@ class TwigTheme implements RenderableInterface
     /**
      * @param mixed $value
      * @param mixed[] $context
-     * @return string
+     * @return string|array
      * @throws CMSException
      */
-    private function contextValueToString($value, array $context) : string
+    private function contextValueToString($value, array $context)
     {
         if ($value instanceof BlockInterface) {
             $additionalContext = [
@@ -101,11 +102,9 @@ class TwigTheme implements RenderableInterface
             return (string) $this->blockRenderer->renderBlock($value, $additionalContext);
         }
         if (is_array($value)) {
-            $str = '';
-            foreach ($value as $item) {
-                $str .= $this->contextValueToString($item, $context);
-            }
-            return $str;
+            $value = array_map(function($item) use ($context) {
+                return $this->contextValueToString($item, $context);
+            }, $value);
         }
         return $value;
     }

@@ -13,8 +13,8 @@ abstract class AbstractThemeTestCase extends TestCase
     protected function createTwigEnvironment(): \Twig_Environment
     {
         $loader = new \Twig_Loader_Array([
-            'index.html' => '{{ header }}Hello {{ name }}!',
-            'header.html' => '{{ menu }}{{ parent.name }}{{ page.name }}'
+            'index.html' => '{{header}}Hello {{ name }}!',
+            'header.html' => '{% for block in menu %}{{ block }}{% endfor %}{{ parent.name }}{{ page.name }}'
         ]);
 
         return new \Twig_Environment($loader);
