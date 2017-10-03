@@ -5,6 +5,7 @@ namespace TheCodingMachine\CMS\Page;
 
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\CMS\Block\BlockInterface;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Uri;
 
 class StaticPageRegistryTest extends TestCase
@@ -16,7 +17,7 @@ class StaticPageRegistryTest extends TestCase
             '/test' => $page
         ]);
 
-        $this->assertSame($page, $registry->getPage(new Uri('http://exemple.com/test')));
-        $this->assertNull($registry->getPage(new Uri('http://exemple.com/test2')));
+        $this->assertSame($page, $registry->getPage(new ServerRequest([], [], new Uri('http://exemple.com/test'))));
+        $this->assertNull($registry->getPage(new ServerRequest([], [], new Uri('http://exemple.com/test2'))));
     }
 }

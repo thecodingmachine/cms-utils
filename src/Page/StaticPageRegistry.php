@@ -4,7 +4,7 @@
 namespace TheCodingMachine\CMS\Page;
 
 
-use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TheCodingMachine\CMS\Block\BlockInterface;
 
 class StaticPageRegistry implements PageRegistryInterface
@@ -22,8 +22,8 @@ class StaticPageRegistry implements PageRegistryInterface
         $this->pages = $pages;
     }
 
-    public function getPage(UriInterface $uri): ?BlockInterface
+    public function getPage(ServerRequestInterface $request): ?BlockInterface
     {
-        return $this->pages[$uri->getPath()] ?? null;
+        return $this->pages[$request->getUri()->getPath()] ?? null;
     }
 }
