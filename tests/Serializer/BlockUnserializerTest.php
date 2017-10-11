@@ -47,7 +47,10 @@ class BlockUnserializerTest extends TestCase
                     'template' => 'index.twig',
                     'config' => [],
                 ]
-            ]
+            ],
+            'key' => 'foo',
+            'ttl' => 12,
+            'tags' => ['tag1', 'tag2']
         ];
         $block = $blockUnserializer->createFromArray($initialArray);
 
