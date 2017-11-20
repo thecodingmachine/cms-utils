@@ -48,4 +48,15 @@ class SubThemeDescriptor implements ThemeDescriptorInterface, \JsonSerializable
             'theme' => $this->themeDescriptor
         ];
     }
+
+    /**
+     * Returns the path of the theme.
+     * This does not have to be an absolute path (it is relative to the theme directory)
+     *
+     * @return string|null
+     */
+    public function getPath(): ?string
+    {
+        return $this->getThemeDescriptor()->getPath();
+    }
 }
