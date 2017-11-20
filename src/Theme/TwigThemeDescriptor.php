@@ -50,4 +50,18 @@ class TwigThemeDescriptor implements ThemeDescriptorInterface, \JsonSerializable
             'config' => $this->config,
         ];
     }
+
+    /**
+     * Returns the path of the theme.
+     * This does not have to be an absolute path (it is relative to the theme directory)
+     *
+     * @return string|null
+     */
+    public function getPath(): ?string
+    {
+        if (isset($this->config['theme'])) {
+            return ltrim($this->config['theme'], '/');
+        }
+        return null;
+    }
 }
