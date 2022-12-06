@@ -9,7 +9,7 @@ use TheCodingMachine\CMS\Block\BlockRendererInterface;
 use TheCodingMachine\CMS\CMSException;
 use TheCodingMachine\CMS\RenderableInterface;
 use TheCodingMachine\CMS\Theme\Extensions\ThemeExtension;
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Stream;
 
 class TwigTheme implements RenderableInterface
 {

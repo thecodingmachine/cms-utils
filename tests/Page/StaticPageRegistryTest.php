@@ -5,8 +5,8 @@ namespace TheCodingMachine\CMS\Page;
 
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\CMS\Block\BlockInterface;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Uri;
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\Uri;
 
 class StaticPageRegistryTest extends TestCase
 {
